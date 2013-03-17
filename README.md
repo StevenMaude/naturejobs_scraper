@@ -3,7 +3,7 @@ A Python scraper for [nature.com's job website](http://www.naturejobs.com).
 Licensed under GPL v3 (see COPYING).
 ***
 ### Rationale
-Nature's job website is a little frustrating to use. First, there's no option of setting the number of jobs per page. This meansclicking through dozens of pages to see those posted, e.g. in a week. Secondly, although you can set inclusive filters, I would prefer by default to be able to quickly skim through all the jobs posted excluding those that are of no interest to me.
+Nature's job website is a little frustrating to use. First, there's no option of setting the number of jobs per page. This means clicking through dozens of pages to see those posted, e.g. in a week. Secondly, although you can set inclusive filters, I would prefer by default to be able to quickly skim through all the jobs posted excluding those that are of no interest to me.
 
 So, I wrote this script. It creates a HTML table which contains jobs posted on the website and can filter out jobs by title, employer or location.
 ***
