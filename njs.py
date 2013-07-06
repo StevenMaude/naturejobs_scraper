@@ -26,6 +26,8 @@
 # more thorough exception handling and maybe more testing
 # ...though it works :)
 
+# Updated June 2013: make it work again, handle rare 1 pixel web bugs wrecking
+# layout of table
 from __future__ import print_function
 from contextlib import closing
 from StringIO import StringIO
@@ -122,10 +124,10 @@ def get_last_page_number(soup):
     # find last page number
     last_page_number = 0
 
-    for li in soup.findAll('li'):
-        if 'href="/naturejobs/science/jobs?page=' in str(li):
+    for a in soup.findAll('a'):
+        if 'href="/naturejobs/science/jobs?page=' in str(a):
             try:
-                page_number_found = int(li.get_text())
+                page_number_found = int(a.get_text())
                 if page_number_found > last_page_number:
                     last_page_number = page_number_found
             except ValueError:
@@ -191,11 +193,15 @@ def process_jobs_in_pages(URL, last_page, fname, to_ignore):
         while not page_accessed:
             try:
                 temp_soup = open_webpage(URL + str(page_num))
-                li = temp_soup.find('ul', \
-                                    class_='jobs-list search-results regular')
-                # remove the navigable strings from the results;
-                # these have len == 1
-                temp_list = [thing for thing in li.children if len(thing) > 1]
+##                li = temp_soup.find('li', \
+##                                    class_='job ')
+##                print(li)
+##                # remove the navigable strings from the results;
+##                # these have len == 1
+##                temp_list = [thing for thing in li.children if len(thing) > 1]
+                another_temp = temp_soup.find('ul', class_='jobs-list search-results regular')
+                temp_list = another_temp.findAll('div', class_='job-details')
+
             # *** need to figure out which exception occurs here
             # could try pointing temp_soup to open wrong webpage and see
             except:
@@ -262,7 +268,8 @@ def process_jobs_in_pages(URL, last_page, fname, to_ignore):
                 pass
 
             try:
-                job_desc = each_job.find('p').get_text().strip()
+                job_desc = each_job.find('p', class_='job-desc'\
+                                            ).get_text().strip()
             except AttributeError:
                 pass
 
@@ -376,6 +383,16 @@ def write_job_info_to_html(job_info, fname):
     location_coded = job_info['locale'].encode("UTF-8")
     posted_coded = job_info['age'].encode("UTF-8")
     desc_coded = job_info['desc'].encode("UTF-8")
+    # fix for stupid 1 pixel doubleclick.net web bugs from Life Technologies :/
+    # it causes the <td> tag to not close as expected
+    # the next <td> is after the name of the next job
+    # name of next job ends up in description of previous job
+    # rest of info of next job ends up in a phantom column after the description
+    # as the next <tr> is within quotes...
+
+    # doesn't help that tag isn't closed, so can't easily remove it
+    # try splitting at <img_src
+    desc_coded = desc_coded.split('<img src')[0]
     link_coded = job_info['link'].encode("UTF-8")
 
     with open(fname, 'a') as f:
