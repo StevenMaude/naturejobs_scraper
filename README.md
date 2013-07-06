@@ -39,5 +39,5 @@ These options can be combined.
 ***
 ### Dependencies and issues
 * Tested on Python 2.7.3 on Windows (Windows 7 64-bit) and Linux (Raspbian).
-* Tested with [BeautifulSoup 4.1.3](http://www.crummy.com/software/BeautifulSoup/); later version should be fine
+* Tested with [BeautifulSoup 4.1.3](http://www.crummy.com/software/BeautifulSoup/); later versions should be fine
 * It does handle international characters in job titles, employers and locations, but, if running on a Linux machine via ssh, make sure that the character set of the ssh client matches that of the shell. (When testing using PuTTY on Windows to connect to a Raspberry Pi, I spent a long time trying to debug the wrong characters being sent to the script until I realised it was PuTTY's remote character set that didn't match the UTF-8 locale setting of bash.) 
