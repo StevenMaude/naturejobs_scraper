@@ -2,6 +2,9 @@
 A Python scraper for [nature.com's job website](http://www.naturejobs.com).
 Licensed under GPL v3 (see COPYING).
 ***
+### Changelog
+06 July 2013: Script broken; now fixed. Fixed issues caused by doubleclick pixel bugs that wrecked the table layout (unclosed img tags).
+16 March 2013: Initial release
 ### Rationale
 Nature's job website is a little frustrating to use. First, there's no option of setting the number of jobs per page. This means clicking through dozens of pages to see those posted in the last week. Secondly, although you can set inclusive filters, I would prefer by default to be able to quickly skim through all the jobs posted excluding those that are of no interest to me.
 
