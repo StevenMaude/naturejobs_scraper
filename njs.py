@@ -199,7 +199,7 @@ def process_jobs_in_pages(URL, last_page, fname, to_ignore):
 ##                # remove the navigable strings from the results;
 ##                # these have len == 1
 ##                temp_list = [thing for thing in li.children if len(thing) > 1]
-                another_temp = temp_soup.find('ul', class_='jobs-list search-results regular')
+                another_temp = temp_soup.find('ul', class_='jobs-list regular')
                 temp_list = another_temp.findAll('div', class_='job-details')
 
             # *** need to figure out which exception occurs here
